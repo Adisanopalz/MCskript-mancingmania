@@ -1,0 +1,236 @@
+# ==========================================
+# SKRIPT: Fishing Rewards (Final Clean)
+# Author: Gemini
+# Version: 12.0 (With Confirmation Message)
+# ==========================================
+
+import:
+    org.bukkit.event.player.PlayerFishEvent
+    org.bukkit.event.player.PlayerFishEvent$State
+
+options:
+    p: &8[&b&lMANCING&8]
+    chance_mythic: 0.1%
+    chance_legend: 1%
+    chance_epic: 5%
+    chance_rare: 15%
+    chance_junk: 25%
+
+# ---------------------------------------------------------
+# PESAN KONFIRMASI (Biar tenang liat console)
+# ---------------------------------------------------------
+on script load:
+    send "&a[Mancing] Script BERHASIL dimuat! Abaikan error merah di atas (Bug Paper 1.21)." to console
+
+# ---------------------------------------------------------
+# 1. EVENT LISTENER
+# ---------------------------------------------------------
+on PlayerFishEvent:
+    if event.getState().toString() is "CAUGHT_FISH":
+        set {_p} to event.getPlayer()
+        
+        if chance of {@chance_mythic}:
+            giveFishingReward({_p}, "MYTHIC")
+            stop
+        else if chance of {@chance_legend}:
+            giveFishingReward({_p}, "LEGENDARY")
+            stop
+        else if chance of {@chance_epic}:
+            giveFishingReward({_p}, "EPIC")
+            stop
+        else if chance of {@chance_rare}:
+            giveFishingReward({_p}, "RARE")
+            stop
+        else if chance of {@chance_junk}:
+            giveFishingReward({_p}, "JUNK")
+            stop
+
+# ---------------------------------------------------------
+# 2. FUNGSI LOGIKA
+# ---------------------------------------------------------
+function giveFishingReward(p: player, tier: text):
+    
+    # --- MYTHIC ---
+    if {_tier} is "MYTHIC":
+        clear {_items::*}
+        add ancient debris to {_items::*}
+        add netherite scrap to {_items::*}
+        add nether star to {_items::*}
+        add heart of the sea to {_items::*}
+        add dragon breath to {_items::*}
+        add echo shard to {_items::*}
+        add amethyst shard to {_items::*}
+        add diamond block to {_items::*}
+        add emerald block to {_items::*}
+        add beacon to {_items::*}
+        add conduit to {_items::*}
+        add music disc pigstep to {_items::*}
+        add music disc relic to {_items::*}
+        add enchanted golden apple to {_items::*}
+        add sponge to {_items::*}
+        
+        set {_reward} to random element out of {_items::*}
+        set lore of {_reward} to "&7&oHarta karun legendaris!", "", "&6Rarity: &5&lMYTHIC"
+        
+        set {_name} to "%type of {_reward}%"
+        give {_reward} to {_p}
+        
+        execute console command "execute at %{_p}% run summon firework_rocket ~ ~2 ~ {LifeTime:20,FireworksItem:{id:firework_rocket,Count:1,tag:{Fireworks:{Flight:1,Explosions:[{Type:1,Flicker:1,Trail:1,Colors:[I;11743532,14602026],FadeColors:[I;15435844]}]}}}}"
+        play sound "ui.toast.challenge_complete" with volume 5 and pitch 1 to {_p}
+        broadcast ""
+        broadcast "{@p} &d&lMITOS TERUNGKAP! &fPlayer &e%{_p}% &fmemancing &5&lMYTHIC RESOURCE&f!"
+        broadcast "{@p} &7Dapat: &5&l%{_name}%"
+        broadcast ""
+
+    # --- LEGENDARY ---
+    else if {_tier} is "LEGENDARY":
+        clear {_items::*}
+        add diamond to {_items::*}
+        add emerald to {_items::*}
+        add ghast tear to {_items::*}
+        add blaze rod to {_items::*}
+        add ender pearl to {_items::*}
+        add nautilus shell to {_items::*}
+        add shulker shell to {_items::*}
+        add phantom membrane to {_items::*}
+        add turtle scute to {_items::*}
+        add wither skeleton skull to {_items::*}
+        add golden apple to {_items::*}
+        add shulker box to {_items::*}
+        add end crystal to {_items::*}
+        add gold block to {_items::*}
+        add iron block to {_items::*}
+        add obsidian to {_items::*}
+        add crying obsidian to {_items::*}
+        add lodestone to {_items::*}
+        
+        set {_reward} to random element out of {_items::*}
+        set lore of {_reward} to "&7&oSangat bernilai tinggi.", "", "&6Rarity: &6&lLEGENDARY"
+        
+        set {_name} to "%type of {_reward}%"
+        give {_reward} to {_p}
+        
+        execute console command "execute at %{_p}% run particle minecraft:totem_of_undying ~ ~1 ~ 0.5 0.5 0.5 0.1 50 normal"
+        play sound "entity.player.levelup" with volume 3 to {_p}
+        broadcast "{@p} &fPlayer &b%{_p}% &fmenemukan &6&lLEGENDARY&f: &6%{_name}%"
+
+    # --- EPIC ---
+    else if {_tier} is "EPIC":
+        clear {_items::*}
+        add raw iron block to {_items::*}
+        add raw gold block to {_items::*}
+        add raw copper block to {_items::*}
+        add slime ball to {_items::*}
+        add magma cream to {_items::*}
+        add gunpowder to {_items::*}
+        add glowstone dust to {_items::*}
+        add honey bottle to {_items::*}
+        add prismarine shard to {_items::*}
+        add prismarine crystals to {_items::*}
+        add name tag to {_items::*}
+        add saddle to {_items::*}
+        add lead to {_items::*}
+        add tnt to {_items::*}
+        add piston to {_items::*}
+        add sticky piston to {_items::*}
+        add observer to {_items::*}
+        add hopper to {_items::*}
+        add sea lantern to {_items::*}
+        add glowstone to {_items::*}
+        add magma block to {_items::*}
+        add slime block to {_items::*}
+        add honey block to {_items::*}
+        
+        set {_reward} to random element out of {_items::*}
+        set lore of {_reward} to "&7&oBahan baku berkualitas.", "", "&6Rarity: &d&lEPIC"
+        
+        set {_name} to "%type of {_reward}%"
+        give {_reward} to {_p}
+        
+        play sound "entity.experience_orb.pickup" with pitch 0.5 to {_p}
+        send "{@p} &7Dapat &d&lEPIC&7: &d%{_name}%" to {_p}
+
+    # --- RARE ---
+    else if {_tier} is "RARE":
+        clear {_items::*}
+        add raw iron to {_items::*}
+        add raw gold to {_items::*}
+        add raw copper to {_items::*}
+        add coal to {_items::*}
+        add charcoal to {_items::*}
+        add redstone to {_items::*}
+        add quartz to {_items::*}
+        add lapis lazuli to {_items::*}
+        add clay ball to {_items::*}
+        add flint to {_items::*}
+        add iron ingot to {_items::*}
+        add gold ingot to {_items::*}
+        add copper ingot to {_items::*}
+        add bone block to {_items::*}
+        add leather to {_items::*}
+        add brick to {_items::*}
+        add paper to {_items::*}
+        add book to {_items::*}
+        add ice to {_items::*}
+        add packed ice to {_items::*}
+        add blue ice to {_items::*}
+        add moss block to {_items::*}
+        add amethyst cluster to {_items::*}
+        add pointed dripstone to {_items::*}
+        add oak sapling to {_items::*}
+        add spruce sapling to {_items::*}
+        add birch sapling to {_items::*}
+        add jungle sapling to {_items::*}
+        add acacia sapling to {_items::*}
+        add dark oak sapling to {_items::*}
+        add cherry sapling to {_items::*}
+        add mangrove propagule to {_items::*}
+        
+        set {_reward} to random element out of {_items::*}
+        set lore of {_reward} to "&7&oSumber daya alam.", "", "&6Rarity: &b&lRARE"
+        
+        set {_name} to "%type of {_reward}%"
+        give {_reward} to {_p}
+        
+        play sound "entity.item.pickup" to {_p}
+        send action bar "&bRARE! &fKamu dapat &7%{_name}%" to {_p}
+
+    # --- JUNK ---
+    else if {_tier} is "JUNK":
+        clear {_items::*}
+        add rotten flesh to {_items::*}
+        add stick to {_items::*}
+        add string to {_items::*}
+        add bone to {_items::*}
+        add bamboo to {_items::*}
+        add sugar cane to {_items::*}
+        add kelp to {_items::*}
+        add wheat seeds to {_items::*}
+        add feather to {_items::*}
+        add ink sac to {_items::*}
+        add lily pad to {_items::*}
+        add bowl to {_items::*}
+        add poisonous potato to {_items::*}
+        add spider eye to {_items::*}
+        add dirt to {_items::*}
+        add gravel to {_items::*}
+        add sand to {_items::*}
+        add cobblestone to {_items::*}
+        add glass bottle to {_items::*}
+        add tripwire hook to {_items::*}
+        add dead bush to {_items::*}
+        add seagrass to {_items::*}
+        add poppy to {_items::*}
+        add dandelion to {_items::*}
+        add pumpkin seeds to {_items::*}
+        add melon seeds to {_items::*}
+        add beetroot seeds to {_items::*}
+        
+        set {_reward} to random element out of {_items::*}
+        set lore of {_reward} to "&7&oSampah atau tanaman liar...", "", "&6Rarity: &7&lJUNK"
+        
+        set {_name} to "%type of {_reward}%"
+        give {_reward} to {_p}
+        
+        play sound "entity.villager.no" with pitch 1.2 to {_p}
+        send "{@p} &7Zonk... cuma dapet &8sampah (%{_name}%)." to {_p}
